@@ -22,10 +22,11 @@ public class FacultyMenu extends javax.swing.JFrame {
         File file = new File("PresentUser.txt");
         Scanner scanner = new Scanner(file);
         String s = scanner.nextLine();
+        scanner.close();
         String[] x = s.split(" ");
         jLabel5.setText(x[0]);
         jLabel6.setText(x[1]);
-        scanner.close();
+
     }
 
     /**

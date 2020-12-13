@@ -2,6 +2,7 @@ import javax.swing.*;
 import java.awt.event.WindowEvent;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
 
@@ -16,7 +17,7 @@ public class NewJFrame extends javax.swing.JFrame {
      * Creates new form NewJFrame
      */
 
-    public NewJFrame() throws FileNotFoundException {
+    public NewJFrame() throws IOException {
         initComponents();
         setQuestion();
 
@@ -67,7 +68,11 @@ public class NewJFrame extends javax.swing.JFrame {
         jButton2.setText("Next ");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                try {
+                    jButton2ActionPerformed(evt);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
         });
 
@@ -115,41 +120,11 @@ public class NewJFrame extends javax.swing.JFrame {
         // TODO add your handling code here:
     }
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {
-
-        /*switch (correctOption) {
-            case 1:
-                if (jRadioButton1.isSelected())
-                    JOptionPane.showMessageDialog(new JFrame(), "Correct Answer");
-                else
-                    JOptionPane.showMessageDialog(new JFrame(), "Wrong Answer");
-                break;
-            case 2:
-                if (jRadioButton2.isSelected())
-                    JOptionPane.showMessageDialog(new JFrame(), "Correct Answer");
-                else
-                    JOptionPane.showMessageDialog(new JFrame(), "Wrong Answer");
-                break;
-            case 3:
-                if (jRadioButton3.isSelected())
-                    JOptionPane.showMessageDialog(new JFrame(), "Correct Answer");
-                else
-                    JOptionPane.showMessageDialog(new JFrame(), "Wrong Answer");
-                break;
-            case 4:
-                if (jRadioButton4.isSelected())
-                    JOptionPane.showMessageDialog(new JFrame(), "Correct Answer");
-                else
-                    JOptionPane.showMessageDialog(new JFrame(), "Wrong Answer");
-                break;
-            default:
-                JOptionPane.showMessageDialog(new JFrame(), "Select an Option");
-        }*/
-
-
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) throws FileNotFoundException {
+        
     }
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) throws IOException {
 
         if (jRadioButton1.isSelected()) {
             if (correctOption == 1) {
@@ -222,14 +197,14 @@ public class NewJFrame extends javax.swing.JFrame {
             public void run() {
                 try {
                     new NewJFrame().setVisible(true);
-                } catch (FileNotFoundException e) {
+                } catch (IOException e) {
                     e.printStackTrace();
                 }
             }
         });
     }
 
-    private void setQuestion() {
+    private void setQuestion() throws IOException {
         try {
             String s = sc.nextLine();
             String[] x = s.split("/");

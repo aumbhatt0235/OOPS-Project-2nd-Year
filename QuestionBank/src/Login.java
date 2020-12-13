@@ -175,7 +175,7 @@ public class Login extends javax.swing.JFrame {
             }
         }
         FileWriter fileWriter = new FileWriter("PresentUser.txt");
-        fileWriter.append(userName + " " + jTextField1.getText());
+        fileWriter.append(userName).append(" ").append(jTextField1.getText());
         scanner1.close();
         scanner2.close();
         fileWriter.close();

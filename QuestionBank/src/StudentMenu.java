@@ -5,9 +5,11 @@
  */
 
 
+import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.Scanner;
 
 /**
@@ -23,10 +25,11 @@ public class StudentMenu extends javax.swing.JFrame {
         File file = new File("PresentUser.txt");
         Scanner scanner = new Scanner(file);
         String s = scanner.nextLine();
+        scanner.close();
         String[] x = s.split(" ");
         jLabel4.setText(x[0]);
         jLabel5.setText(x[1]);
-        scanner.close();
+
     }
 
     /**
@@ -72,14 +75,18 @@ public class StudentMenu extends javax.swing.JFrame {
             public void actionPerformed(ActionEvent e) {
                 try {
                     jButton1ActionPerformed(e);
-                } catch (FileNotFoundException fileNotFoundException) {
+                } catch (IOException fileNotFoundException) {
                     fileNotFoundException.printStackTrace();
                 }
             }
         });
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                jButton2ActionPerformed(e);
+                try {
+                    jButton2ActionPerformed(e);
+                } catch (FileNotFoundException fileNotFoundException) {
+                    fileNotFoundException.printStackTrace();
+                }
             }
         });
 
@@ -131,10 +138,32 @@ public class StudentMenu extends javax.swing.JFrame {
         pack();
     }// </editor-fold>
 
-    private void jButton2ActionPerformed(ActionEvent e) {
+    private void jButton2ActionPerformed(ActionEvent e) throws FileNotFoundException {
+        File file = new File("PresentUser.txt");
+        Scanner sc = new Scanner(file);
+        String x = sc.nextLine();
+        String[] y = x.split(" ");
+        String id = y[1];
+        File file1 = new File("Scores.txt");
+        Scanner scanner = new Scanner(file1);
+        boolean found = false;
+        String score = null;
+        while (scanner.hasNext()) {
+
+            String a = scanner.nextLine();
+            String[] b = a.split(" ");
+            if (b[0].equals(id)) {
+                found = true;
+                score = b[1];
+            }
+        }
+        if (found) {
+            JOptionPane.showMessageDialog(new JFrame(), "You Scored " + score);
+        } else
+            JOptionPane.showMessageDialog(new JFrame(), "Score not found");
     }
 
-    private void jButton1ActionPerformed(ActionEvent e) throws FileNotFoundException {
+    private void jButton1ActionPerformed(ActionEvent e) throws IOException {
         this.setVisible(false);
         new NewJFrame().setVisible(true);
     }
